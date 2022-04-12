@@ -1,5 +1,4 @@
 <script>
-	import TextPage from './textPage.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import {beforeUpdate} from 'svelte';
 
@@ -47,16 +46,22 @@
 {/if}
 
 <style>
-	.question p {
+
+.question{
+	margin-top: 20px;
+}
+
+.question p {
 		text-align: center;
 		border: 1px solid gainsboro;
+		margin-top: 10px;
 	}
 
 	.side_bar {
 		position: absolute;
 		top: 70px;
 		left: 0;
-		height: calc(88.2vh - 70px);
+		height: calc(90vh - 58px);
 		width: 250px;
 		border: 2px solid gray;
 		float: left;

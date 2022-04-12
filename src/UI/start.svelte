@@ -1,16 +1,15 @@
 <script>
 	import EndTest from '../EndTest.svelte';
 	import TextPage from '../textPage.svelte';
-	
-	let toggle = false;
 
+	let toggle = false;
 </script>
 
 <main>
 	<div class="Container">
 		{#if !toggle}
 			<div class="Start_btn flex_center">
-				<button on:click={()=> toggle = true}>Start Test</button>
+				<button on:click={() => (toggle = true)}>Start Test</button>
 			</div>
 		{/if}
 		{#if toggle}
@@ -29,16 +28,16 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		vertical-align: middle;
 	}
-
-	.Start_btn {
-		margin-top: 70px;
-		height: 600px;
-	}
-
-
 	.Container {
-		margin-top: 100px;
+		width: 100%;
+		padding-top: 25px;
+		margin: auto;
+	}
+
+	.Start_btn{
+		margin-top: 250px;
 	}
 
 	.Start_btn button {
@@ -47,11 +46,11 @@
 		border: 2px solid black;
 		cursor: pointer;
 		border-radius: 8px;
+		margin: auto 0px;
 	}
 
-	.Start_btn button:hover{
+	.Start_btn button:hover {
 		background-color: rgba(20, 20, 231, 0.142);
 		border: 2px solid rgb(4, 4, 174);
 	}
-
 </style>

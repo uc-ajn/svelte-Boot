@@ -1,8 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
-	import { tweened } from 'svelte/motion';
 	import List from './List.svelte';
 	import EndTest from './EndTest.svelte';
+	import Modal from './UI/Modal.svelte';
 
 	let answerSheet = [];
 	let endTestBtn = true;
@@ -13,6 +13,9 @@
 	let stopper;
 	const TOTAL_TIME = 120;
 	let time = TOTAL_TIME;
+	let isOpenModal = false;
+	let TimeOverModal = false;
+
 
 	onMount(async function () {
 		const response = await fetch('/static/data/question.json');
@@ -22,17 +25,26 @@
 	stopper = setInterval(() => {
 		if (time > 0) time--;
 		else {
-			alert('Time over test End');
+			// isOpenModal = true;
 			timeOut();
 			clearInterval(stopper);
 		}
 	}, 1000);
 
-	function endPage() {
-		clearInterval(stopper);
-		if (confirm('Are you sure to End the Test')) {
+	let clickValue;
+
+	function EndPage(event){
+		clickValue = event.detail;
+		if(clickValue === 1){
+			clearInterval(stopper);
 			endTestBtn = false;
+			isOpenModal = false;
+			
 		}
+	}
+
+	function endPage() {
+			isOpenModal = true;
 	}
 
 	function onChange(content_id, answer, is_correct, i) {
@@ -47,12 +59,33 @@
 
 	function timeOut() {
 		endTestBtn = false;
+		TimeOverModal = true
+		isOpenModal = true;
 	}
 
 	$: minute = Math.floor(time / 60);
 	$: minname = minute > 1 ? ':' : ':';
 	$: second = Math.floor(time - minute * 60);
+
+	function closeModal() {
+		isOpenModal = false;
+	}
+
+	
 </script>
+
+{#if TimeOverModal}
+<Modal {isOpenModal} >
+	<p slot="para">Time is over and test will be End</p>
+	<button slot="ok_btn" class="btnOk" on:click={closeModal}>OK</button>
+</Modal>
+{:else}
+<Modal {isOpenModal} on:closeModal={closeModal}>
+	<p slot="para">Are sure to End the test</p>
+	<button slot="ok_btn" class="btnOk" on:click={EndPage}>OK</button>
+	<button slot="cancel_btn" class="btnOk" on:click={closeModal}>Cancel</button>
+</Modal>
+{/if}
 
 {#if endTestBtn}
 	<div class="container">
@@ -66,7 +99,7 @@
 		/>
 		{#each data as item, j}
 			{#if count == j}
-				<h1>{JSON.parse(item.content_text).question}</h1>
+				<h1>Q{j + 1}.{JSON.parse(item.content_text).question}</h1>
 				{#each Array(JSON.parse(item.content_text).answers.length) as _, i}
 					<label>
 						<span class="span-hide"
@@ -78,9 +111,7 @@
 							type="radio"
 							data-value={i + 1}
 							name="choose_correct"
-							checked={found && found.answer === JSON.parse(item.content_text).answers[i].answer
-								? true
-								: false}
+							checked={found && found.answer === JSON.parse(item.content_text).answers[i].answer ? true : false}
 							value={JSON.parse(item.content_text).answers[i].answer}
 							on:change={() =>
 								onChange(
@@ -122,9 +153,9 @@
 		margin: 0 auto;
 		width: 65%;
 	}
-
 	.container h1 {
 		font-size: 27px;
+		margin-bottom: 20px;
 	}
 
 	.container label {
@@ -134,8 +165,9 @@
 	.navigation {
 		position: absolute;
 		bottom: 0;
+		left: 0;
 		width: 100vw;
-		height: 55px;
+		height: 65px;
 		background-color: #eae4e4cb;
 		border-top: 2px solid rgb(167, 170, 170);
 	}
@@ -143,8 +175,8 @@
 	.navigation_content {
 		display: flex;
 		justify-content: end;
-		width: 96%;
-		vertical-align: middle;
+		width: 97%;
+		margin: 15px 0px;
 	}
 
 	button {
@@ -158,11 +190,14 @@
 		margin: auto 5px;
 	}
 
+	.btnOk {
+		margin-top: 25px;
+	}
+
 	p {
 		font-weight: bold;
 		font-size: 18px;
-		margin-left: 8px;
-		margin-right: 8px;
+		margin: auto 8px;
 	}
 
 	.span-hide {

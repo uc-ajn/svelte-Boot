@@ -5,7 +5,8 @@
 	import Start from './UI/start.svelte';
 	import ReveiwPage from './Reveiw.svelte';
 
-	export let data, answerSheet ;
+	export let data;
+	export let answerSheet;
 
 	let total_questions = 0;
 	let correct_answers = 0;
@@ -15,12 +16,11 @@
 	let restart = false;
 	let found = {};
 	let reveiw = false;
-	let review_id
+	let review_id;
 	let result = 0;
 
 	onMount(async function () {
 		let i = 0;
-		console.log(answerSheet);
 		total_questions = data.length;
 		for (i; i < answerSheet.length; i++) {
 			if (answerSheet[i].is_correct == 1) {
@@ -31,9 +31,8 @@
 		}
 		attempted_questions = i;
 		unattempted_questions = total_questions - i;
-		result = (100 * attempted_questions)/data.length;
-		result = parseFloat(result).toFixed(2)
-
+		result = (100 * attempted_questions) / data.length;
+		result = parseFloat(result).toFixed(2);
 	});
 
 	function ReveiwAnswer(event) {
@@ -77,7 +76,7 @@
 				{#each data as item, j}
 					<div class="result">
 						<li on:click={ReveiwAnswer} id={j + 1}>
-							<strong>Question:{j + 1}</strong> 
+							<strong>Question:{j + 1}</strong>
 							{item.snippet}
 						</li>
 						<span class="span-hide"
@@ -107,7 +106,7 @@
 			{/if}
 		</ul>
 		<div id="restart">
-			<button id="restar_btn" on:click={()=> restart = true}>Re-take</button>
+			<button id="restar_btn" on:click={() => (restart = true)}>Re-take</button>
 		</div>
 	</main>
 {:else}
@@ -140,15 +139,15 @@
 
 	.option {
 		border: 1.5px solid gray;
-		height: 22px;
+		height: 25px;
 		width: 25px;
 		text-align: center;
 		border-radius: 50%;
 		margin-left: 10px;
-		justify-items: center;
-		justify-content: center;
-		align-items: center;
-		padding-top: 4px;
+		/* justify-items: center; */
+		/* justify-content: center; */
+		/* align-items: center; */
+		padding-top: 1px;
 	}
 
 	.result_container {
@@ -159,14 +158,17 @@
 		border: 2px solid gray;
 		border-radius: 10px;
 		width: 150px;
-		height: 80px;
+		height: 90px;
 		margin-left: 20px;
-		margin-top: 0px;
+		/* margin-top: 6px; */
 		padding: 10px;
-		font-size: 18px;
+		font-size: 20px;
 		text-align: center;
 	}
 
+	h4{
+		padding: 10px;
+	}
 	#total h3 {
 		color: rgb(8, 8, 184);
 	}
@@ -183,8 +185,8 @@
 		color: rgb(216, 216, 6);
 	}
 
-	#result{
-		color: rgba(222, 6, 222, 0.948)
+	#result {
+		color: rgba(222, 6, 222, 0.948);
 	}
 
 	.result_block h3 {
@@ -205,6 +207,7 @@
 		margin-top: 50px;
 	}
 	#restart {
+		margin-top: 10px;
 		text-align: center;
 	}
 

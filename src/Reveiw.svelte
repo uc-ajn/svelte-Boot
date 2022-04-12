@@ -3,7 +3,9 @@
 	import Start from './UI/start.svelte';
 	import EndTest from './EndTest.svelte';
 
-	export let answerSheet, data, review_id;
+	export let answerSheet
+	export let data;
+	export let review_id;
 
 	let start_page = false;
 	let result_page = false;
@@ -33,7 +35,7 @@
 						<br /><br /><br />
 
 						<h2>Explanation:</h2>
-						<h4 class="sequ">{@html JSON.parse(item.content_text).explanation}</h4>
+						<h3 class="sequ">{@html JSON.parse(item.content_text).explanation}</h3>
 					{/if}
 				</div>
 			{/each}
@@ -68,7 +70,7 @@
 		display: flex;
 		justify-content: end;
 		position: absolute;
-		bottom: 100px;
+		bottom: 50px;
 
 	}
 
