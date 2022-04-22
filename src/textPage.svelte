@@ -18,7 +18,7 @@
 
 
 	onMount(async function () {
-		const response = await fetch('/static/data/question.json');
+		const response = await fetch('/data/question.json');
 		data = await response.json();
 	});
 
