@@ -1,3 +1,12 @@
+<!-- File Name   :index.svelte
+Description :Svelte Project
+Author      :Aayush Jain
+Version     :2
+Package     :
+Created     :06/04/2022
+Updated By  :Author
+-->
+
 <script>
 	import { createEventDispatcher } from 'svelte';
 	import {beforeUpdate} from 'svelte';

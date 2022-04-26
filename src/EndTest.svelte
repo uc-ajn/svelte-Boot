@@ -1,6 +1,12 @@
-<script>
-	// @ts-nocheck
+<!-- File Name   :index.svelte
+Description :Svelte Project
+Author      :Aayush Jain
+Version     :2
+Package     :
+Created     :06/04/2022
+Updated By  :Author-->
 
+<script>
 	import { onMount } from 'svelte';
 	import Start from './UI/start.svelte';
 	import ReveiwPage from './Reveiw.svelte';
@@ -17,7 +23,7 @@
 	let found = {};
 	let reveiw = false;
 	let review_id;
-	let result = 0;
+	let result ;
 
 	onMount(async function () {
 		let i = 0;
@@ -32,11 +38,12 @@
 		attempted_questions = i;
 		unattempted_questions = total_questions - i;
 		result = (100 * attempted_questions) / data.length;
-		result = parseFloat(result).toFixed(2);
+		result = result.toFixed(2);
 	});
 
-	function ReveiwAnswer(event) {
-		review_id = event.target.id;
+	function ReveiwAnswer(e) {
+		review_id = e+1;
+		console.log(review_id);
 		reveiw = true;
 	}
 </script>
@@ -75,7 +82,7 @@
 			{#if data && data.length}
 				{#each data as item, j}
 					<div class="result">
-						<li on:click={ReveiwAnswer} id={j + 1}>
+						<li on:click={() =>ReveiwAnswer(j)} >
 							<strong>Question:{j + 1}</strong>
 							{item.snippet}
 						</li>

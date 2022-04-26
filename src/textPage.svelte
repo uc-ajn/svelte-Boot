@@ -1,3 +1,13 @@
+<!-- File Name   :index.svelte
+Description :Svelte Project
+Author      :Aayush Jain
+Version     :2
+Package     :
+Created     :06/04/2022
+Updated By  :Author
+Updated Date:26/04/2022
+-->
+
 <script>
 	import { onMount } from 'svelte';
 	import List from './List.svelte';
@@ -16,16 +26,14 @@
 	let isOpenModal = false;
 	let TimeOverModal = false;
 
-
 	onMount(async function () {
-		const response = await fetch('/static/data/question.json');
+		const response = await fetch('/data/question.json');
 		data = await response.json();
 	});
 
 	stopper = setInterval(() => {
 		if (time > 0) time--;
 		else {
-			// isOpenModal = true;
 			timeOut();
 			clearInterval(stopper);
 		}
@@ -33,18 +41,17 @@
 
 	let clickValue;
 
-	function EndPage(event){
+	function EndPage(event) {
 		clickValue = event.detail;
-		if(clickValue === 1){
+		if (clickValue === 1) {
 			clearInterval(stopper);
 			endTestBtn = false;
 			isOpenModal = false;
-			
 		}
 	}
 
 	function endPage() {
-			isOpenModal = true;
+		isOpenModal = true;
 	}
 
 	function onChange(content_id, answer, is_correct, i) {
@@ -59,7 +66,7 @@
 
 	function timeOut() {
 		endTestBtn = false;
-		TimeOverModal = true
+		TimeOverModal = true;
 		isOpenModal = true;
 	}
 
@@ -70,25 +77,23 @@
 	function closeModal() {
 		isOpenModal = false;
 	}
-
-	
 </script>
 
 {#if TimeOverModal}
-<Modal {isOpenModal} >
-	<p slot="para">Time is over and test will be End</p>
-	<button slot="ok_btn" class="btnOk" on:click={closeModal}>OK</button>
-</Modal>
+	<Modal {isOpenModal}>
+		<p slot="para">Time is over and test will be End</p>
+		<button slot="ok_btn" class="btnOk" on:click={closeModal}>OK</button>
+	</Modal>
 {:else}
-<Modal {isOpenModal} on:closeModal={closeModal}>
-	<p slot="para">Are sure to End the test</p>
-	<button slot="ok_btn" class="btnOk" on:click={EndPage}>OK</button>
-	<button slot="cancel_btn" class="btnOk" on:click={closeModal}>Cancel</button>
-</Modal>
+	<Modal {isOpenModal} on:closeModal={closeModal}>
+		<p slot="para">Are sure to End the test</p>
+		<button slot="ok_btn" class="btnOk" on:click={EndPage}>OK</button>
+		<button slot="cancel_btn" class="btnOk" on:click={closeModal}>Cancel</button>
+	</Modal>
 {/if}
 
-{#if endTestBtn}
-	<div class="container">
+{#if endTestBtn} 
+	<div class="container" style="margin-left: {list ? '280px': 'auto' };">
 		<List
 			{answerSheet}
 			{data}
@@ -111,7 +116,9 @@
 							type="radio"
 							data-value={i + 1}
 							name="choose_correct"
-							checked={found && found.answer === JSON.parse(item.content_text).answers[i].answer ? true : false}
+							checked={found && found.answer === JSON.parse(item.content_text).answers[i].answer
+								? true
+								: false}
 							value={JSON.parse(item.content_text).answers[i].answer}
 							on:change={() =>
 								onChange(
@@ -127,6 +134,7 @@
 			{/if}
 		{/each}
 	</div>
+	<!-- {/if} -->
 	<div class="navigation">
 		<div class="navigation_content">
 			<p>0{minute}{minname}{second < 10 ? '0' + second : second}</p>
