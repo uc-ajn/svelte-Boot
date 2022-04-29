@@ -1,12 +1,11 @@
 <!-- File Name   :list.svelte
 Description :Svelte with svelte Project
-Author      :Aayush Jain
+Author      :Aayush  Jain
 Version     :1
 Package     :
 Created     :29/04/2022
 Updated By  :Author
 -->
-
 <script>
 	import { createEventDispatcher } from 'svelte';
 	import { beforeUpdate } from 'svelte';
@@ -45,7 +44,8 @@ Updated By  :Author
 		<div class="question_list mt-2">
 			<ul class="list-group ">
 				{#each data as item, j}
-					<a href="#list"
+					<a
+						href="#list"
 						class="list-group-item m-1 list-group-item-action list-group-item-light text-truncate text-nowrap overflow-hidden"
 						style="width:250px;"
 						on:click={() => getDetail(j)}
