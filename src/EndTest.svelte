@@ -1,10 +1,9 @@
-<!-- File Name   :index.svelte
+<!-- File Name   :EndTest.svelte
 Description :Svelte Project
 Author      :Aayush Jain
 Version     :2
 Package     :
-Created     :06/04/2022
-Updated By  :Author-->
+Created     :06/04/2022-->
 
 <script>
 	import { onMount } from 'svelte';
@@ -23,7 +22,7 @@ Updated By  :Author-->
 	let found = {};
 	let reveiw = false;
 	let review_id;
-	let result ;
+	let result = 0;
 
 	onMount(async function () {
 		let i = 0;
@@ -38,11 +37,12 @@ Updated By  :Author-->
 		attempted_questions = i;
 		unattempted_questions = total_questions - i;
 		result = (100 * attempted_questions) / data.length;
+		// @ts-ignore
 		result = result.toFixed(2);
 	});
 
 	function ReveiwAnswer(e) {
-		review_id = e+1;
+		review_id = e + 1;
 		console.log(review_id);
 		reveiw = true;
 	}
@@ -52,68 +52,129 @@ Updated By  :Author-->
 	<ReveiwPage {data} {review_id} {answerSheet} />
 {:else if !restart}
 	<main>
-		<div class="result_container">
-			<div class="result_block" id="total">
-				<h3>Total</h3>
-				<h4>{total_questions}</h4>
+		<div class="container d-flex justify-content-center mt-4 ">
+			<div
+				class="card text-dark bg-light mx-1 text-nowrap h-25 shadow bg-body rounded border width160"
+			>
+				<div class="card-body">
+					<h5 class="card-title text-center text-primary">Total</h5>
+					<p class="card-text text-center">
+						{total_questions}
+					</p>
+				</div>
 			</div>
-			<div class="result_block" id="correct">
-				<h3>Correct</h3>
-				<h4>{correct_answers}</h4>
+			<div
+				class="card text-dark bg-light mx-1 text-nowrap h-25 shadow  bg-body rounded border width160"
+			>
+				<div class="card-body">
+					<h5 class="card-title text-center text-success">Correct</h5>
+					<p class="card-text text-center">
+						{correct_answers}
+					</p>
+				</div>
 			</div>
-			<div class="result_block" id="incorrect">
-				<h3>Incorrect</h3>
-				<h4>{incorrect_answers}</h4>
+			<div
+				class="card text-dark bg-light mx-1 text-nowrap h-25 shadow  bg-body rounded border width160"
+			>
+				<div class="card-body">
+					<h5 class="card-title text-center text-danger ">Incorrect</h5>
+					<p class="card-text text-center">
+						{incorrect_answers}
+					</p>
+				</div>
 			</div>
-			<div class="result_block" id="attempted">
-				<h3>Attempted</h3>
-				<h4>{attempted_questions}</h4>
+			<div
+				class="card text-dark bg-light mx-1 text-nowrap h-25 shadow  bg-body rounded border width160"
+			>
+				<div class="card-body">
+					<h5 class="card-title text-center text-info">Attempted</h5>
+					<p class="card-text text-center">
+						{attempted_questions}
+					</p>
+				</div>
 			</div>
-			<div class="result_block" id="unattempted">
-				<h3>Unattempted</h3>
-				<h4>{unattempted_questions}</h4>
+			<div
+				class="card text-dark bg-light mx-1 text-nowrap h-25 shadow  bg-body rounded border width160"
+			>
+				<div class="card-body">
+					<h5 class="card-title text-center text-warning text-sm-wrap">Unattempted</h5>
+					<p class="card-text text-center">
+						{unattempted_questions}
+					</p>
+				</div>
 			</div>
-			<div class="result_block" id="result">
-				<h3>Result</h3>
-				<h4>{result}%</h4>
+			<div
+				class="card text-dark bg-light mx-1 text-nowrap h-25 shadow bg-body rounded border width160"
+			>
+				<div class="card-body">
+					<h5 class="card-title text-center text-secondary">Result</h5>
+					<p class="card-text text-center">
+						{result}%
+					</p>
+				</div>
 			</div>
 		</div>
-		<ul class="result_list">
+		<div class="container mt-4">
 			{#if data && data.length}
 				{#each data as item, j}
-					<div class="result">
-						<li on:click={() =>ReveiwAnswer(j)} >
-							<strong>Question:{j + 1}</strong>
-							{item.snippet}
-						</li>
-						<span class="span-hide"
-							>{(found = answerSheet.find((o) => o.content_id === item.content_id))}</span
+					<div class="list-group col-10 mx-auto">
+						<a
+							href="#ResultPage"
+							class="list-group-item list-group-item-action list-group-item-secondary shadow-sm rounded d-flex justify-content-between mb-2 py-1 px-4"
+							on:click={() => ReveiwAnswer(j)}
 						>
-						<div class="options">
-							{#each Array(JSON.parse(item.content_text).answers.length) as _, i}
-								{#if found}
-									{#if JSON.parse(item.content_text).answers[i].is_correct == 1}
-										<div class="option bg-green">{String.fromCharCode(65 + i)}</div>
-									{:else if JSON.parse(item.content_text).answers[i].answer == found.answer && JSON.parse(item.content_text).answers[i].is_correct == 1}
-										<div class="option bg-green">{String.fromCharCode(65 + i)}</div>
-									{:else if JSON.parse(item.content_text).answers[i].answer == found.answer}
-										<div class="option bg-red">{String.fromCharCode(65 + i)}</div>
+							<div>
+								<strong>Question:{j + 1}</strong>
+								{item.snippet}
+							</div>
+							<span class="d-none "
+								>{(found = answerSheet.find((o) => o.content_id === item.content_id))}</span
+							>
+
+							<div class="">
+								{#each Array(JSON.parse(item.content_text).answers.length) as _, i}
+									{#if found}
+										{#if JSON.parse(item.content_text).answers[i].is_correct == 1}
+											<div class="btn btn-sm rounded-circle border-secondary mx-2 bg-success">
+												{String.fromCharCode(65 + i)}
+											</div>
+											
+										{:else if JSON.parse(item.content_text).answers[i].answer == found.answer && JSON.parse(item.content_text).answers[i].is_correct == 1}
+											<div class="btn btn-sm rounded-circle border-secondary mx-2 bg-success">
+												{String.fromCharCode(65 + i)}
+											</div>
+										{:else if JSON.parse(item.content_text).answers[i].answer == found.answer}
+											<div class="btn btn-sm rounded-circle border-secondary mx-2 bg-danger">
+												{String.fromCharCode(65 + i)}
+											</div>
+										{:else}
+											<div class="btn btn-sm rounded-circle border-secondary mx-2">
+												{String.fromCharCode(65 + i)}
+											</div>
+										{/if}
+									{:else if JSON.parse(item.content_text).answers[i].is_correct == 1}
+										<div class="btn btn-sm rounded-circle border-secondary mx-2 bg-success">
+											{String.fromCharCode(65 + i)}
+										</div>
 									{:else}
-										<div class="option">{String.fromCharCode(65 + i)}</div>
+										<div class="btn btn-sm rounded-circle border-secondary mx-2 ">
+											{String.fromCharCode(65 + i)}
+										</div>
 									{/if}
-								{:else if JSON.parse(item.content_text).answers[i].is_correct == 1}
-									<div class="option bg-green">{String.fromCharCode(65 + i)}</div>
-								{:else}
-									<div class="option">{String.fromCharCode(65 + i)}</div>
-								{/if}
-							{/each}
-						</div>
+								{/each}
+							</div>
+						</a>
 					</div>
 				{/each}
 			{/if}
-		</ul>
-		<div id="restart">
-			<button id="restar_btn" on:click={() => (restart = true)}>Re-take</button>
+			<div class="mt-2 d-flex justify-content-center">
+				<button
+					type="button"
+					class="btn btn-outline-primary"
+					id="restar_btn"
+					on:click={() => (restart = true)}>Re-take</button
+				>
+			</div>
 		</div>
 	</main>
 {:else}
@@ -121,7 +182,7 @@ Updated By  :Author-->
 {/if}
 
 <style>
-	.bg-red {
+	/* .bg-red {
 		background-color: red;
 	}
 
@@ -132,48 +193,44 @@ Updated By  :Author-->
 	.options {
 		display: flex;
 		margin-left: 35px;
-	}
+	} */
 
-	.result_list {
+	/* .result_list {
 		padding-left: 15px;
-	}
+	} */
 
-	.result {
+	/* .result {
 		display: flex;
 		justify-content: center;
 		padding: 0px;
-	}
+	} */
 
-	.option {
+	/* .option {
 		border: 1.5px solid gray;
 		height: 25px;
 		width: 25px;
 		text-align: center;
 		border-radius: 50%;
 		margin-left: 10px;
-		/* justify-items: center; */
-		/* justify-content: center; */
-		/* align-items: center; */
 		padding-top: 1px;
-	}
+	} */
 
-	.result_container {
+	/* .result_container {
 		display: flex;
 		justify-content: center;
-	}
-	.result_block {
+	} */
+	/* .result_block {
 		border: 2px solid gray;
 		border-radius: 10px;
 		width: 150px;
 		height: 90px;
 		margin-left: 20px;
-		/* margin-top: 6px; */
 		padding: 10px;
 		font-size: 20px;
 		text-align: center;
-	}
+	} */
 
-	h4{
+	/* h4 {
 		padding: 10px;
 	}
 	#total h3 {
@@ -199,21 +256,21 @@ Updated By  :Author-->
 	.result_block h3 {
 		margin-top: 5px;
 		font-size: 22px;
-	}
+	} */
 
-	ul li {
+	/* ul li {
 		list-style-type: none;
 		padding-bottom: 20px;
 		line-height: 1.2;
 		white-space: nowrap;
 		width: 775px;
 		cursor: pointer;
-	}
+	} */
 
-	ul {
+	/* ul {
 		margin-top: 50px;
-	}
-	#restart {
+	} */
+	/* #restart {
 		margin-top: 10px;
 		text-align: center;
 	}
@@ -223,9 +280,9 @@ Updated By  :Author-->
 		width: 90px;
 		border-radius: 8px;
 		background: rgb(220, 229, 231);
-	}
+	} */
 
-	.span-hide {
+	/* .span-hide {
 		display: none;
-	}
+	} */
 </style>

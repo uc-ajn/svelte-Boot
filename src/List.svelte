@@ -1,15 +1,15 @@
-<!-- File Name   :index.svelte
-Description :Svelte Project
+<!-- File Name   :list.svelte
+Description :Svelte with svelte Project
 Author      :Aayush Jain
-Version     :2
+Version     :1
 Package     :
-Created     :06/04/2022
+Created     :29/04/2022
 Updated By  :Author
 -->
 
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import {beforeUpdate} from 'svelte';
+	import { beforeUpdate } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -23,7 +23,7 @@ Updated By  :Author
 
 	beforeUpdate(() => {
 		let i = 0;
-		total_question = data.length ;
+		total_question = data.length;
 		for (i; i < answerSheet.length; i++) {
 			attempted_ques = i + 1;
 		}
@@ -36,61 +36,25 @@ Updated By  :Author
 </script>
 
 {#if list == true}
-	<div class="side_bar">
-		<div class="question">
-			<p>Attempted question {attempted_ques}</p>
-			<p>Unattempted question {unattempted_ques}</p>
-		</div>
-		<div class="question_list">
-			<ul>
+	<div class="position-absolute mt-0 left-0 bg-light border text-dark">
+		<ul class="list-group list-group-flush mt-1">
+			<li class="list-group-item text-center">Attempted question {attempted_ques}</li>
+			<li class="list-group-item text-center">Unattempted question {unattempted_ques}</li>
+		</ul>
+
+		<div class="question_list mt-2">
+			<ul class="list-group ">
 				{#each data as item, j}
-					<li on:click={() => getDetail(j)}>
-						Qus:{j + 1}
+					<a href="#list"
+						class="list-group-item m-1 list-group-item-action list-group-item-light text-truncate text-nowrap overflow-hidden"
+						style="width:250px;"
+						on:click={() => getDetail(j)}
+					>
+						{j + 1}.
 						{JSON.parse(item.content_text).question}
-					</li>
+					</a>
 				{/each}
 			</ul>
 		</div>
 	</div>
 {/if}
-
-<style>
-
-.question{
-	margin-top: 20px;
-}
-
-.question p {
-		text-align: center;
-		border: 1px solid gainsboro;
-		margin-top: 10px;
-	}
-
-	.side_bar {
-		position: absolute;
-		top: 70px;
-		left: 0;
-		height: calc(90vh - 58px);
-		width: 250px;
-		border: 2px solid gray;
-		float: left;
-	}
-
-	.question_list ul li {
-		white-space: nowrap;
-		width: 240px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-	.question_list ul {
-		margin: 0px;
-		padding: 10px;
-	}
-
-	.question_list li {
-		line-height: 2.5;
-		list-style-type: none;
-		cursor: pointer;
-	}
-</style>

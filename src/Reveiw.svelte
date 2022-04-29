@@ -1,11 +1,9 @@
-<!-- File Name   :index.svelte
+<!-- File Name   :Reveiw.svelte
 Description :Svelte Project
 Author      :Aayush Jain
-Version     :2
+Version     :1
 Package     :
 Created     :06/04/2022
-Updated By  :Author
-Updated Date:26/04/2022
 -->
 
 <script>
@@ -22,15 +20,15 @@ Updated Date:26/04/2022
 
 <main>
 	{#if !start_page && !result_page}
-		<ul class="review_container">
+		<div class="container mt-5">
 			{#each data as item, j}
-				<div class="result">
+				<div class="">
 					{#if review_id == j + 1}
-						<li>
+						<li class="list-unstyled">
 							<strong>Question:{j + 1}</strong>
 							{JSON.parse(item.content_text).question}
 						</li>
-						<br /> <br />
+						<br /> 
 						{#each Array(JSON.parse(item.content_text).answers.length) as _, i}
 							<label>
 								<input
@@ -41,20 +39,20 @@ Updated Date:26/04/2022
 								{@html JSON.parse(item.content_text).answers[i].answer}
 							</label> <br />
 						{/each}
-						<br /><br /><br />
+						<br /><br />
 
-						<h2>Explanation:</h2>
-						<h3 class="sequ">{@html JSON.parse(item.content_text).explanation}</h3>
+						<h4>Explanation:</h4>
+						<h6 class="sequ">{@html JSON.parse(item.content_text).explanation}</h6>
 					{/if}
 				</div>
 			{/each}
-		</ul>
-		<div class="review_navigation">
-			<div class="review_Nav_container">
-				<button on:click={() => (start_page = true)}>Re-Take</button>
-				<button on:click={() => review_id--} disabled={review_id == 1}>Previous</button>
-				<button on:click={() => review_id++} disabled={review_id == 11}>Next</button>
-				<button on:click={() => (result_page = true)}>Result Page</button>
+		</div>
+		<div class="p-2 vw-100 bg-secondary text-white position-absolute end-0 bottom-0 border-dark border-top">
+			<div class="d-flex justify-content-end">
+				<button class="btn btn-secondary col-auto border text-nowrap mx-2" on:click={() => (start_page = true)}>Re-Take</button>
+				<button class="btn btn-secondary col-auto border text-nowrap mx-2" on:click={() => review_id--} disabled={review_id == 1}>Previous</button>
+				<button class="btn btn-secondary col-auto border text-nowrap mx-2" on:click={() => review_id++} disabled={review_id == 11}>Next</button>
+				<button class="btn btn-secondary col-auto border text-nowrap mx-2" on:click={() => (result_page = true)}>Result Page</button>
 			</div>
 		</div>
 	{:else if start_page}
@@ -64,35 +62,3 @@ Updated Date:26/04/2022
 	{/if}
 </main>
 
-<style>
-	.review_container {
-		width: 80%;
-		margin: 0px auto;
-	}
-
-	.result li {
-		list-style: none;
-	}
-
-	.review_navigation {
-		position: absolute;
-		bottom: 0;
-		width: 100vw;
-		height: 65px;
-		background-color: #eae4e4cb;
-		border-top: 2px solid rgb(167, 170, 170);
-	}
-
-	.review_Nav_container{
-		display: flex;
-		justify-content: end;
-		width: 97%;
-		margin: 15px 0px;
-	}
-	.review_navigation button {
-		width: 90px;
-		height: 32px;
-		margin-right: 16px;
-		border-radius: 5px;
-	}
-</style>
