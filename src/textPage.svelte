@@ -110,7 +110,7 @@ Created     :29/04/2022
 				count = event.detail;
 			}}
 		/>
-		<div class="container w-75" style="margin-left: {list ? '280px' : 'auto'};">
+		<div class="container w-75">
 			{#each data as item, j}
 				{#if count == j}
 					<h4 class="mb-3 pt-4">Q{j + 1}.{JSON.parse(item.content_text).question}</h4>
@@ -158,12 +158,6 @@ Created     :29/04/2022
 				}}>List</button
 			>
 			<button
-				class="btn btn-secondary col-auto border text-nowrap mx-2"
-				data-bs-toggle="modal"
-				data-bs-target="#exampleModal"
-				on:click={endPage}>End Test</button
-			>
-			<button
 				class="btn btn-secondary col-auto border mx-2"
 				on:click={() => count--}
 				disabled={count == 0}>Previous</button
@@ -175,8 +169,14 @@ Created     :29/04/2022
 				on:click={() => count++}
 				disabled={count == data.length - 1}>Next</button
 			>
+			<button
+				class="btn btn-secondary col-auto border text-nowrap mx-2"
+				data-bs-toggle="modal"
+				data-bs-target="#exampleModal"
+				on:click={endPage}>End Test</button
+			>
 		</div>
 	</div>
 {:else}
-	<EndTest {data} {answerSheet} />
+	<EndTest {data} {answerSheet} {count}/>
 {/if}

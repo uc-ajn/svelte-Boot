@@ -18,8 +18,8 @@ Created     :29/04/2022 -->
 	}
 </script>
 
-<div class="position-fixed top-0 start-0 w-100 h-100 " style="display: {isOpenModal ? 'block' : 'none'}; background-color: rgba(0, 0, 0, 0.4);" on:click={closeModal} />
-<div class="modal height150 w-25 position-fixed top-50 start-50 translate-middle bg-light border rounded" style="display: {isOpenModal ? 'block' : 'none'};">
+<div class="position-fixed top-0 start-0 w-100 h-100 " style="display: {isOpenModal ? 'block' : 'none'}; background-color: rgba(0, 0, 0, 0.4); z-index:1;" on:click={closeModal} />
+<div class="modal height150 w-25 position-fixed top-50 start-50 translate-middle bg-light border rounded" style="display: {isOpenModal ? 'block' : 'none'};  z-index:2;">
 	<div class="modal_content p-4 text-center">
         <slot name = "para"></slot>
         <slot name="ok_btn" id="btn"></slot>

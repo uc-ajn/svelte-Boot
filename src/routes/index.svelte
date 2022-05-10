@@ -10,14 +10,14 @@ Created     :29/04/2022 -->
 </script>
 
 <div class="container-fluid vh-100 p-0">
-	<nav class="navbar navbar-light bg-light border-bottom">
+	<nav class="navbar navbar-light bg-white border-bottom">
 		<a class="navbar-brand position-absolute" href="#Start">
 			<img
 				src="https://www.ucertify.com/layout/themes/bootstrap4/images/logo/ucertify_logo.png"
 				alt=""
 				width="130"
 				height="34"
-				class="d-inline-block align-text-top"
+				class="d-inline-block align-text-top bg-transparent"
 			/>
 		</a>
 		<h3 class="text-center w-100">uCertify Test Prep</h3>

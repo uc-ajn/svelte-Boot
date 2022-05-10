@@ -13,11 +13,12 @@ Updated By  :Author
 	const dispatch = createEventDispatcher();
 
 	export let answerSheet;
+	export let data;
+	export let list = false;
+
 	let total_question = 0;
 	let attempted_ques = 0;
 	let unattempted_ques = 11;
-	export let data;
-	export let list = false;
 	let count = 0;
 
 	beforeUpdate(() => {
